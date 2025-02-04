@@ -1,4 +1,5 @@
 // generics types
+// global typescript interface
 interface Book {
     id: number;
     title: string; 
@@ -10,7 +11,7 @@ interface Book {
     description: string; 
     coverColor: string; 
     coverUrl: string;
-    video: string;
+    videoUrl: string;
     summary: string;
-    isLonedBook?: boolean;
+    isLoanedBook?: boolean;
 }
