@@ -32,7 +32,7 @@ const BookCard = ({
                             className='object-contain' />
                         <p className='text-light-100'>11 days left to return</p>   
                     </div>  
-                    <Button className='book-btn'>Download</Button>
+                    <Button className='book-btn text-dark-100'>Download</Button>
                 </div>
             )}
         </Link>
