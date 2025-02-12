@@ -11,7 +11,7 @@ const {
 const imagekit = new ImageKit({
     publicKey,
     privateKey,
-    urlEndpoint, 
+    urlEndpoint,  
 });
 
 export async function  GET(){

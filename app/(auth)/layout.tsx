@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import Image from 'next/image';
-
+ 
 const layout = ({children}: {children: ReactNode}) => {
   return (
     <main className='auth-container'>
