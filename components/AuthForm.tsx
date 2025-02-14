@@ -2,7 +2,7 @@
 
 import {zodResolver} from '@hookform/resolvers/zod';
 import { ZodType} from 'zod';
-import {DefaultValues, Field, FieldValues, Path, SubmitHandler, useForm, UseFormReturn} from 'react-hook-form';
+import {DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn} from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,13 +17,15 @@ import { Input } from "@/components/ui/input";
 import  Link  from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from '@/constants';
 import ImageUpload from './ImageUpload';
+import { toast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
                              // interfece define types of props comming into these fun.
                              // T generic parameter that extends the FormValues
 interface Props<T extends FieldValues> {
     type: 'SIGN_IN' | 'SIGN_UP';
     schema: ZodType<T>;
     defaultValues: T;
-    onSubmit: (data: T) => Promise<{success: boolean ; eroor?: string}>;
+    onSubmit: (data: T) => Promise<{success: boolean ; error?: string}>;
 }
 
 const AuthForm =<T extends FieldValues> ({
@@ -33,6 +35,7 @@ const AuthForm =<T extends FieldValues> ({
     onSubmit
 }: Props<T>) => {
                                 // define your form schema here
+    const router = useRouter();
 
     const isSignIn = type === 'SIGN_IN';
 
@@ -41,7 +44,24 @@ const AuthForm =<T extends FieldValues> ({
         defaultValues: defaultValues as DefaultValues<T>,
     });
 
-    const handleSubmit: SubmitHandler<T> = async (data) => {};
+    const handleSubmit: SubmitHandler<T> = async (data) => {
+        const result= await onSubmit(data);
+        if(result.success){
+            toast({
+                title: 'Success',
+                description: isSignIn ? 'you have successfully signed in' : 'you have successfully signed up',
+            });
+
+            router.push("/");
+        }else{
+            toast({
+                title: `Error ${isSignIn ? "signing in" : "signing up"}`,
+                description: result.error ?? "An error occurred.",
+                variant: "destructive",
+        
+            })
+        }
+    };
   
     return(
     <div className='flex flex-col gap-4'>
