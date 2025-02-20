@@ -1,20 +1,44 @@
-import React from 'react'
-import Image from 'next/image'
-import { Button } from './ui/button';
+import React from 'react';
+import Image from 'next/image';
 import BookCover from './BookCover';
+import BorrowBook from './BorrowBook';
+import { db } from '@/database/drizzle';
+import { users } from '@/database/schema';
+import { eq } from 'drizzle-orm';
 
 // using Book as an interface i.e generic types
-const BookOverview = ({
+interface Props extends Book {
+  userId: string;
+}
+
+const BookOverview = async({
   title, 
   author, 
   genre, 
   rating, 
-  total_Copies,
-  available_Copies,
+  totalCopies,
+  availableCopies,
   description, 
   coverColor, 
   coverUrl, 
-}: Book) => {
+  id,
+  userId,
+}: Props) => {
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+
+  const borrowingEligibility = {
+    isEligible: availableCopies > 0 && user?.status === "APPROVED",
+    message:
+      availableCopies <= 0
+        ? "Book is not available"
+        : "You are not eligible to borrow this book",
+  };
+
   return( 
     <section className='book-overview'>
       <div className='flex flex-1 flex-col gap-5'>
@@ -30,16 +54,19 @@ const BookOverview = ({
         </div>
 
         <div className='book-copies'>
-            <p>Total Books <span>{total_Copies}</span></p>
-            <p>Available Books <span>{available_Copies}</span></p>
+            <p>Total Books <span>{totalCopies}</span></p>
+            <p>Available Books <span>{availableCopies}</span></p>
         </div>
 
         <p className='book-description'>{description}</p>
 
-        <Button className="book-overview_btn">
-          <Image src="/icons/book.svg" alt='book' width={20} height={20}></Image>
-          <p className='font-bebas-neue text-xl text-dark-100'>Borrow</p>
-        </Button>
+        {user && (
+          <BorrowBook
+            bookId={id}
+            userId={userId}
+            borrowingEligibility={borrowingEligibility}
+          />
+        )}
       </div>
 
       <div className='relative flex flex-1 justify-center'>

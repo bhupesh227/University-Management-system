@@ -8,6 +8,20 @@
       "when": 1739300626924,
       "tag": "0000_smart_millenium_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1739769283341,
+      "tag": "0001_solid_exiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1740021955519,
+      "tag": "0002_good_mariko_yashida",
+      "breakpoints": true
     }
   ]
 }
