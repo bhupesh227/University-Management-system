@@ -30,8 +30,8 @@ export const adminSideBarLinks = [
   },
   {
     img: "/icons/admin/bookmark.svg",
-    route: "/admin/borrow-records",
-    text: "Borrow Records",
+    route: "/admin/book-requests",
+    text: "Borrow Requests",
   },
   {
     img: "/icons/admin/user.svg",
@@ -41,7 +41,7 @@ export const adminSideBarLinks = [
 ];
 
 export const FIELD_NAMES = {
-  fullname: "Full name",
+  fullName: "Full name",
   email: "Email",
   universityId: "University ID Number",
   password: "Password",
@@ -49,7 +49,7 @@ export const FIELD_NAMES = {
 };
 
 export const FIELD_TYPES = {
-  fullname: "text",
+  fullName: "text",
   email: "email",
   universityId: "number",
   password: "password",
