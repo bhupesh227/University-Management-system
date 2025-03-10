@@ -20,6 +20,15 @@ export const signInWithCredentials = async (params: Pick<AuthCredentials, "email
     const {success} = await ratelimit.limit(ip);
     if(!success) return redirect("/too-fast");
 
+    const NotExistingUser = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+    if(NotExistingUser.length == 0){
+        return {success: false, error: "User does not already exists"};
+    }
+
     try {
         const result = await signIn("credentials",{
             email,
