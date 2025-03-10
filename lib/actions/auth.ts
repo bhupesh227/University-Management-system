@@ -26,7 +26,7 @@ export const signInWithCredentials = async (params: Pick<AuthCredentials, "email
         .where(eq(users.email, email))
         .limit(1);
     if(NotExistingUser.length == 0){
-        return {success: false, error: "User does not already exists"};
+        return {success: false, error: "User does not exists, please sign up"};
     }
 
     try {
