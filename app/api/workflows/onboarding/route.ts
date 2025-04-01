@@ -29,7 +29,6 @@ const getUserState = async (email: string): Promise<UserState> => {
   const now = new Date();
   const timeDifference = now.getTime() - lastActivityDate.getTime();
 
-
   if (timeDifference > THREE_DAYS_IN_MS && timeDifference <= THIRTY_DAYS_IN_MS) {
     return "non-active";
   }
@@ -43,18 +42,18 @@ export const { POST } = serve<InitialData>(async (context) => {
   await context.run("new-signup", async () => {
     await sendEmail({
       email,
-      subject: "Welcome to the Platform!",
+      subject: "Welcome to Our Platform",
       message: emailTemplate(
         fullName, 
-        "Welcome to the Platform!", 
-        `<p>Hello ${fullName},</p><p>We're excited to have you with us. Explore our curated collections and enjoy an intuitive browsing experience.</p>`),
+        "Welcome to Our Platform", 
+        `<p>Dear ${fullName},</p>
+         <p>Thank you for joining our platform. We are delighted to have you. Explore our features and learn more about how we can support your goals.</p>`
+      ),
     });
   });
 
-  // Wait for 3 days.
-  await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3 ); 
+  await context.sleep("wait-for-3-days", 60 * 60 * 24 * 3); 
 
-  // Check user state after 3 days and send appropriate email.
   const stateAfter3Days = await context.run("check-user-state", async () => {
     return await getUserState(email);
   });
@@ -63,11 +62,12 @@ export const { POST } = serve<InitialData>(async (context) => {
     await context.run("send-email-non-active", async () => {
       await sendEmail({
         email,
-        subject: "Are you still there?",
+        subject: "We Value Your Presence",
         message: emailTemplate(
           fullName,
-          "Are you still there?",
-          `<p>Hey ${fullName},</p><p>We miss you. Are you still active on our platform?</p>`
+          "We Value Your Presence",
+          `<p>Dear ${fullName},</p>
+           <p>We noticed you haven’t been active recently. If you need any assistance or have questions, please let us know. We’re here to help!</p>`
         ),
       });
     });
@@ -75,20 +75,19 @@ export const { POST } = serve<InitialData>(async (context) => {
     await context.run("send-email-active", async () => {
       await sendEmail({
         email,
-        subject: "Welcome Back!",
+        subject: "Thank You for Your Engagement",
         message: emailTemplate(
           fullName,
-          "Welcome Back!",
-          `<p>Welcome Back ${fullName}!</p><p>Thanks for staying active on our platform.</p>`
+          "Thank You for Your Engagement",
+          `<p>Dear ${fullName},</p>
+           <p>Thank you for being active on our platform. We're thrilled to see your engagement and are here to support you every step of the way.</p>`
         ),
       });
     });
   }
 
-
   await context.sleep("wait-for-10-days", 60 * 60 * 24 * 7);
 
-  
   const stateAfter10Days = await context.run("check-user-state", async () => {
     return await getUserState(email);
   });
@@ -97,11 +96,12 @@ export const { POST } = serve<InitialData>(async (context) => {
     await context.run("send-email-non-active-10days", async () => {
       await sendEmail({
         email,
-        subject: "We've Missed You!",
+        subject: "We’ve Missed You",
         message: emailTemplate(
           fullName,
-          "We've Missed You!",
-          `<p>Hey ${fullName},</p><p>It's been 10 days since we last saw you. We hope to see you back soon!</p>`
+          "We’ve Missed You",
+          `<p>Dear ${fullName},</p>
+           <p>It’s been a while since we last saw you on our platform. We would love to have you back—please reach out if there is anything we can do to assist.</p>`
         ),
       });
     });
@@ -109,15 +109,14 @@ export const { POST } = serve<InitialData>(async (context) => {
     await context.run("send-email-active-10days", async () => {
       await sendEmail({
         email,
-        subject: "Great to See You're Active!",
+        subject: "Thank You for Staying Active",
         message: emailTemplate(
           fullName,
-          "Great to See You're Active!",
-          `<p>Hi ${fullName},</p><p>Thanks for staying active with us!</p>`
+          "Thank You for Staying Active",
+          `<p>Dear ${fullName},</p>
+           <p>Thank you for your continued engagement. We appreciate your loyalty and look forward to bringing you more value in the coming days.</p>`
         ),
       });
     });
   }
-
-
 });
