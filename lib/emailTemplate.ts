@@ -54,6 +54,10 @@ export const emailTemplate = (fullName: string, subject: string, messageBody: st
           <div class="content">
             ${messageBody}
           </div>
+          <div class="content">
+            <p>If you have any questions, feel free to reach out.</p>
+            <p>Best Regards,<br>Bhupesh Bora</p>
+          </div>
           <div class="footer">
             &copy; 2025, Bhupesh Bora. All rights reserved.
           </div>
