@@ -1,22 +1,38 @@
 import React from 'react';
-import BookCard from './BookCard';
+import {BookCard, BorrowedBook } from './BookCard';
+import Sort from './Sort';
+import NotFound from './NotFound';
 
 interface Props {
   title: string;
-  books: Book[];
+  books: Book[] | BorrowedBook[];
+  isBorrowed?: boolean;
   containerClassName?: string;
+  showSorts?: boolean;
+  showNoResultBtn?: boolean;
 }
 
-const BookList = ({title, books, containerClassName}: Props) => {
-  if(books.length < 2) return;
+const BookList = ({title, books,isBorrowed, containerClassName, showSorts = false,showNoResultBtn = false,}: Props) => {
   return (
   <section className={containerClassName}>
-    <h2 className='font-bebas-neue text-4xl text-light-100'>{title}</h2>
+    <div className="flex flex-row items-center justify-between">
+        <h2 className="font-bebas-neue text-4xl text-blue-100">{title}</h2>
 
-    <ul className='book-list'>
-        {books.map((book) => (
-            <BookCard key={book.title} {...book}/>
-        ))}
+        {showSorts && <Sort />}
+    </div>
+
+    <ul className="book-list">
+        {books.length > 0 ? (
+          books.map((item,i) =>
+            !isBorrowed ? (
+              <BookCard key={item.id} {...(item as Book)} />
+            ) : (
+              <BorrowedBook key={i} {...(item as BorrowedBook)} />
+            )
+          )
+        ) : (
+          <NotFound linkBtn={showNoResultBtn} />
+        )}
     </ul>
   </section>
   

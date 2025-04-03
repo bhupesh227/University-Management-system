@@ -1,16 +1,22 @@
 "use server";
 
 import { db } from "@/database/drizzle";
-import { books, borrowRecords } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { books, borrowRecords, users } from "@/database/schema";
+import { asc, count, desc, eq, getTableColumns, ilike, or } from "drizzle-orm";
 import dayjs from "dayjs";
+import config from "../config";
+import { workflowClient } from "../workflow";
 
-export const borrowBook = async (params: BorrowBookParams) => {
+const ITEMS_PER_PAGE = 20;
+
+export async function borrowBook(params: BorrowBookParams) {
   const { userId, bookId } = params;
 
   try {
     const book = await db
-      .select({ availableCopies: books.availableCopies })
+      .select({
+        availableCopies: books.availableCopies,
+      })
       .from(books)
       .where(eq(books.id, bookId))
       .limit(1);
@@ -18,7 +24,7 @@ export const borrowBook = async (params: BorrowBookParams) => {
     if (!book.length || book[0].availableCopies <= 0) {
       return {
         success: false,
-        error: "Book is not available for borrowing",
+        error: "Book is not available",
       };
     }
 
@@ -33,8 +39,20 @@ export const borrowBook = async (params: BorrowBookParams) => {
 
     await db
       .update(books)
-      .set({ availableCopies: book[0].availableCopies - 1 })
+      .set({
+        availableCopies: book[0].availableCopies - 1,
+      })
       .where(eq(books.id, bookId));
+
+    await workflowClient.trigger({
+      url: `${config.env.prodApiEndpoint}/api/workflows/borrowbook`,
+      body: {
+        userId,
+        bookId,
+        borrowDate: dayjs().toDate().toDateString(),
+        dueDate,
+      },
+    });
 
     return {
       success: true,
@@ -42,10 +60,100 @@ export const borrowBook = async (params: BorrowBookParams) => {
     };
   } catch (error) {
     console.log(error);
-
     return {
       success: false,
-      error: "An error occurred while borrowing the book",
+      error: "Error borrowing book",
     };
   }
-};
+}
+
+
+export async function searchBooks({
+  query,
+  sort = "available",
+  page = 1,
+}: {
+  query?: string;
+  sort?: string;
+  page?: number;
+}) {
+  try {
+    const searchConditions = query
+      ? or(
+          ilike(books.title, `%${query}%`),
+          ilike(books.genre, `%${query}%`),
+          ilike(books.author, `%${query}%`)
+        )
+      : undefined;
+
+    const sortOptions: { [key: string]: any } = {
+      newest: desc(books.createdAt),
+      oldest: asc(books.createdAt),
+      highestRated: desc(books.rating),
+      available: desc(books.totalCopies),
+    };
+
+    const sortingCondition = sortOptions[sort] || desc(books.totalCopies);
+
+    const allBooks = await db
+      .select()
+      .from(books)
+      .where(searchConditions)
+      .orderBy(sortingCondition)
+      .limit(ITEMS_PER_PAGE)
+      .offset((page - 1) * ITEMS_PER_PAGE);
+
+    const totalBooks = await db
+      .select({
+        count: count(),
+      })
+      .from(books)
+      .where(searchConditions);
+
+    const totalPage = Math.ceil(totalBooks[0].count / ITEMS_PER_PAGE);
+    const hasNextPage = page < totalPage;
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(allBooks)),
+      metadata: {
+        totalPage,
+        hasNextPage,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      error: "Error searching books",
+    };
+  }
+}
+
+export async function getBorrowedBooks(userId: string) {
+  try {
+    const borrowedBooks = await db
+      .select({
+        ...getTableColumns(books),
+        borrow: {
+          ...getTableColumns(borrowRecords),
+        },
+      })
+      .from(borrowRecords)
+      .innerJoin(books, eq(borrowRecords.bookId, books.id))
+      .innerJoin(users, eq(borrowRecords.userId, users.id))
+      .where(eq(borrowRecords.userId, userId))
+      .orderBy(desc(borrowRecords.borrowDate));
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(borrowedBooks)),
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      error: "Error getting borrowed books",
+    };
+  }
+}

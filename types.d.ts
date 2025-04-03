@@ -41,3 +41,17 @@ interface BorrowBookParams {
     bookId: string;
     userId: string;
 }
+
+interface PageProps {
+    searchParams: Promise<{
+      query?: string;
+      sort?: string;
+      page?: number;
+    }>;
+    params: Promise<{ id: string }>;
+}
+
+interface BorrowedBook extends Book {
+    borrow: BorrowRecord;
+    user?: User;
+}

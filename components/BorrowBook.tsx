@@ -31,6 +31,7 @@ const BorrowBook = ({
             description: message,
             variant: "destructive",
           });
+          return;
         }
         setBorrowing(true);
 
@@ -43,7 +44,7 @@ const BorrowBook = ({
             description: "Book borrowed successfully",
             });
 
-            router.push("/");
+            router.push("/my-profile");
         } else {
             toast({
             title: "Error",
@@ -52,11 +53,11 @@ const BorrowBook = ({
             });
         }
         } catch (error) {
-        toast({
-            title: "Error",
-            description: "An error occurred while borrowing the book",
-            variant: "destructive",
-        });
+            toast({
+                title: "Error",
+                description: "An error occurred while borrowing the book",
+                variant: "destructive",
+            });
         } finally {
         setBorrowing(false);
         }
