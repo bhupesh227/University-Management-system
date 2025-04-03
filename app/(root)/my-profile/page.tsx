@@ -57,7 +57,7 @@ const Page = async () => {
               </div>
             </div>
 
-            <div className="flex flex-col items-end justify-center ">
+           
               <form
               action={async () => {
                 "use server";
@@ -65,11 +65,11 @@ const Page = async () => {
                 redirect("/sign-in");
               }}
               >
-                <Button type="submit" variant="destructive" className="logout hover:bg-light-200 hover:text-red-600">
+                <Button type="submit" variant="destructive" className="logout">
                   Logout
                 </Button>
               </form>
-            </div>
+            
 
             <div className="mt-5">
               <p className="text-lg text-light-100">University</p>
@@ -85,7 +85,7 @@ const Page = async () => {
               </p>
             </div>
              
-            <div className="relative mt-10 h-72 md:w-1/2 w-full rounded-lg">
+            <div className="relative mt-10 h-72 w-full rounded-lg">
               <Image
                 src={`${config.env.imagekit.urlEndpoint}${user.universityCard}`}
                 alt="university-card"
@@ -94,8 +94,8 @@ const Page = async () => {
               />
             </div>
 
-            <div className="validity mt-4 mb-8">
-              <p className="text-white text-pretty-sm font-semibold">
+            <div className="validity ">
+              <p >
                 Valid for {new Date().getFullYear()}-
                 {new Date().getFullYear() + 1} Academic Year
               </p>

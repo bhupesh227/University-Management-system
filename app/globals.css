@@ -223,6 +223,38 @@
   .select-item {
     @apply focus:bg-dark-600 focus:text-light-100 !important;
   }
+  /* Profile Page */
+  .profile {
+    @apply flex flex-col gap-16 lg:flex-row;
+  }
+
+  .profile .id-card {
+    @apply flex flex-col h-fit max-lg:items-center max-lg:justify-center lg:sticky lg:top-10;
+  }
+
+  .profile .id-card .inner {
+    @apply gradient-blue relative w-full rounded-[20px] border border-dark-600 p-5 sm:w-[512px];
+  }
+
+  .profile .id-card .badge {
+    @apply absolute -top-10 left-1/2 z-10 h-28 w-20 -translate-x-1/2 rounded-b-full bg-dark-700 shadow-lg;
+  }
+
+  .profile .id-card .badge-inner {
+    @apply absolute bottom-3.5 left-1/2 h-3 w-10 -translate-x-1/2 rounded-full bg-dark-800;
+  }
+
+  .profile .id-card .validity {
+    @apply mt-7 border-t border-dotted border-neutral-800 pt-5;
+  }
+
+  .profile .id-card .validity p {
+    @apply text-center font-bebas-neue text-xs tracking-wider text-gray-400;
+  }
+
+  .profile .logout {
+    @apply w-full mt-4 bg-green-500 text-white font-bold hover:bg-blue-100 !important;
+  }
 }
 
 @layer utilities {

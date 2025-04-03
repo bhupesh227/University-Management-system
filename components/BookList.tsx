@@ -15,8 +15,8 @@ interface Props {
 const BookList = ({title, books,isBorrowed, containerClassName, showSorts = false,showNoResultBtn = false,}: Props) => {
   return (
   <section className={containerClassName}>
-    <div className="flex flex-row items-center justify-between">
-        <h2 className="font-bebas-neue text-4xl text-blue-100">{title}</h2>
+    <div className="flex flex-row items-center justify-center gap-8">
+        <h2 className="font-bebas-neue text-4xl text-blue-100 ">{title}</h2>
 
         {showSorts && <Sort />}
     </div>
