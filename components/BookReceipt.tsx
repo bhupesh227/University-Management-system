@@ -33,12 +33,12 @@ const BookReceipt = (props: Props) => {
 
     const ticket = document.getElementById("book-ticket");
     if (ticket) {
-      // Temporarily make the section visible off-screen
+      
       ticket.style.position = "absolute";
       ticket.style.left = "-9999px";
       ticket.style.display = "block";
 
-      // Capture the section as a canvas
+      
       const canvas = await html2canvas(ticket, {
         scale: 2,
         backgroundColor: "#000000",

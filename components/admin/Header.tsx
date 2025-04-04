@@ -1,4 +1,6 @@
 import { Session } from "next-auth";
+import Search from "./Search";
+
 
 const Header = ({ session }: { session: Session }) => {
   return (
@@ -8,11 +10,11 @@ const Header = ({ session }: { session: Session }) => {
           {session?.user?.name}
         </h2>
         <p className="text-base text-slate-500">
-          Monitor all of your users and books here
+          Check your website and manage your products
         </p>
       </div>
 
-      {/*<p>Search</p>*/}
+      <Search/>
     </header>
   );
 };

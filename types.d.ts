@@ -77,3 +77,15 @@ interface BorrowedBook extends Book {
     borrow: BorrowRecord;
     user?: User;
 }
+
+interface QueryParams {
+    query?: string;
+    sort?: string;
+    page?: number;
+    limit?: number;
+}
+
+interface UpdateAccountStatusParams {
+    userId: string;
+    status: "PENDING" | "APPROVED" | "REJECTED";
+}

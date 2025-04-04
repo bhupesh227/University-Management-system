@@ -3,14 +3,15 @@ import React from 'react';
 import Image from 'next/image';
 import { adminSideBarLinks } from '@/constants';
 import Link from 'next/link';
-import { cn ,getInitials} from '@/lib/utils';
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn } from '@/lib/utils';
+import Avatar from '@/components/Avatar';
 import { usePathname } from "next/navigation";
 import { Session } from 'next-auth';
+
 const Sidebar = ({ session }: { session: Session }) => {
     const pathname = usePathname();
   return (
-    <div className='admin-sidebar'>
+    <div className='admin-sidebar bg-orange-100'>
         <div>
             <div className='logo'>
                 <Image src="/icons/admin/BorrowClub.svg" alt="logo" width={37} height={37}/>
@@ -41,15 +42,12 @@ const Sidebar = ({ session }: { session: Session }) => {
             </div>
         </div>
         <div className="user">
-            <Avatar>
-            <AvatarFallback className="bg-amber-100">
-                {getInitials(session?.user?.name || "IN")}
-            </AvatarFallback>
-            </Avatar>
+            <Avatar name={session?.user?.name || ""} size="md"/>
+            
 
             <div className="flex flex-col max-md:hidden">
-            <p className="font-semibold text-dark-200">{session?.user?.name}</p>
-            <p className="text-xs text-light-500">{session?.user?.email}</p>
+                <p className="font-semibold text-dark-200">{session?.user?.name}</p>
+                <p className="text-xs text-light-500">{session?.user?.email}</p>
             </div>
       </div>
     </div>

@@ -30,12 +30,12 @@ export const adminSideBarLinks = [
   },
   {
     img: "/icons/admin/bookmark.svg",
-    route: "/admin/book-requests",
-    text: "Borrow Requests",
+    route: "/admin/borrowRecords",
+    text: "Borrow Records",
   },
   {
     img: "/icons/admin/user.svg",
-    route: "/admin/account-requests",
+    route: "/admin/accountRequests",
     text: "Account Requests",
   },
 ];
