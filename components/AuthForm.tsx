@@ -34,7 +34,7 @@ const AuthForm =<T extends FieldValues> ({
     defaultValues, 
     onSubmit
 }: Props<T>) => {
-                                // define your form schema here
+                               
     const router = useRouter();
 
     const isSignIn = type === 'SIGN_IN';
@@ -49,7 +49,7 @@ const AuthForm =<T extends FieldValues> ({
         if(result.success){
             toast({
                 title: 'Success',
-                description: isSignIn ? 'you have successfully signed in' : 'you have successfully signed up',
+                description: isSignIn ? 'Log In Successfully' : 'Signed Up Successfully',
             });
 
             router.push("/");
@@ -65,7 +65,7 @@ const AuthForm =<T extends FieldValues> ({
   
     return(
     <div className='flex flex-col gap-4'>
-        <h1 className='text-2xl font-semibold text-white'>
+        <h1 className='text-2xl font-semibold text-light-200'>
             {isSignIn ? 'Welcome back to BorrowClub' : 'Create an account'}
         </h1>
         <p className='text-light-100'>
@@ -79,9 +79,7 @@ const AuthForm =<T extends FieldValues> ({
                 onSubmit={form.handleSubmit(handleSubmit)}
                     className="w-full space-y-6"
             >
-                {/* Object.keys(defaultValues) returns an array of the object's property names this help 
-                to iterate over the object and make field according to validation.tsx input fields
-                */}
+                
                 {Object.keys(defaultValues).map((field) => (
                     <FormField
                         key={field}
@@ -125,17 +123,17 @@ const AuthForm =<T extends FieldValues> ({
                 </Button>
             </form>
         </Form>
-      <p className='text-center text-base font-medium'>
+      <p className='text-center text-base font-medium '>
         {isSignIn ? 'New to BorrowClub?' : 'Already have an account?'}
         
-        <Link href={isSignIn ? '/sign-up' : '/sign-in'} className="font-bold text-primary">
-            {isSignIn ? 'Create an account' : 'Log in'}
+        <Link href={isSignIn ? '/sign-up' : '/sign-in'} className="ml-3 font-bold text-primary">
+            {isSignIn ? 'Sign Up' : 'Log In'}
         </Link>
         
       </p>
     </div>
        
-    );                                                      // return closes here
+    );                                                   
 };
 
 export default AuthForm

@@ -16,7 +16,7 @@ interface Book {
     createdAt: Date | null;
 }
 
-interface AuthCredentials {
+interface AuthCredentails {
     fullName: string;
     email: string;
     password: string;
@@ -50,6 +50,28 @@ interface PageProps {
     }>;
     params: Promise<{ id: string }>;
 }
+
+interface User {
+    id: string;
+    fullName: string;
+    email: string;
+    universityId: number;
+    universityCard: string;
+    status: "PENDING" | "APPROVED" | "REJECTED" | null;
+    role: "USER" | "ADMIN" | null;
+    lastActivityDate: string | null;
+    createdAt: Date | null;
+  }
+
+interface BorrowRecord {
+    id: string;
+    userId: string;
+    bookId: string;
+    borrowDate: Date;
+    dueDate: string;
+    returnDate: string | null;
+    status: string;
+  }
 
 interface BorrowedBook extends Book {
     borrow: BorrowRecord;

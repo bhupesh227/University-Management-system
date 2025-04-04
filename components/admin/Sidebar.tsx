@@ -13,7 +13,7 @@ const Sidebar = ({ session }: { session: Session }) => {
     <div className='admin-sidebar'>
         <div>
             <div className='logo'>
-                <Image src="/icons/admin/BorrowClub.png" alt="logo" width={37} height={37}/>
+                <Image src="/icons/admin/BorrowClub.svg" alt="logo" width={37} height={37}/>
                 <h1>BorrowClub</h1>
             </div>
             <div className='mt-10 flex flex-col gap-5'>
