@@ -6,7 +6,7 @@ import { or, desc, asc, count, eq, ilike } from "drizzle-orm";
 import { db } from "@/database/drizzle";
 import { borrowRecords, users } from "@/database/schema";
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 15;
 
 export async function getUsers({
   query,
@@ -82,7 +82,7 @@ export async function updateAccountStatus(params: UpdateAccountStatusParams) {
       .where(eq(users.id, userId))
       .returning();
 
-    revalidatePath("/admin/account-requests");
+    revalidatePath("/admin/accountRequests");
     return {
       success: true,
       data: updatedUser,
