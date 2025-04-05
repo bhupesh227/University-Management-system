@@ -13,10 +13,10 @@ const Sidebar = ({ session }: { session: Session }) => {
   return (
     <div className='admin-sidebar bg-orange-100'>
         <div>
-            <div className='logo'>
+            <Link href={"/"} className='logo'>
                 <Image src="/icons/admin/BorrowClub.svg" alt="logo" width={37} height={37}/>
                 <h1>BorrowClub</h1>
-            </div>
+            </Link>
             <div className='mt-10 flex flex-col gap-5'>
                 {adminSideBarLinks.map((link)=>{
                     const isSelected =

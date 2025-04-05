@@ -200,11 +200,11 @@
   }
 
   .pagination-btn_light {
-    @apply bg-light-300 text-dark-300 hover:bg-light-300/70 !important;
+    @apply bg-light-100 text-dark-500 hover:bg-blue-100 !important;
   }
 
   .pagination-btn_dark {
-    @apply bg-dark-300 hover:bg-dark-100 !important;
+    @apply bg-dark-700 hover:bg-blue-100 !important;
   }
 
   #pagination p {

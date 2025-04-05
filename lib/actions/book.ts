@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import config from "../config";
 import { workflowClient } from "../workflow";
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 15;
 
 export async function borrowBook(params: BorrowBookParams) {
   const { userId, bookId } = params;

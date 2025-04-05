@@ -14,11 +14,11 @@ const Header = ({ session }: { session: Session }) => {
   return (
     <header className="mt-10 flex items-center justify-between gap-5">
       <Link href="/">
-        <Image src="/icons/BorrowClub.svg" alt="logo" width={50} height={50} className="bg-orange-400 rounded-lg"/>  
+        <Image src="/icons/BorrowClub.svg" alt="logo" width={50} height={50} className="rounded-lg bg-orange-400"/>  
       </Link>
       <ul className="flex flex-row items-center gap-8">
             
-            <li className="border border-light-200 rounded-lg px-4 py-2">
+            <li className="cursor-pointer rounded-lg border border-light-200 px-4 py-2">
               <Link
               href="/library"
               className={cn(

@@ -5,7 +5,6 @@ import Image from 'next/image';
 import dayjs from 'dayjs';
 import BookReceipt from './BookReceipt';
 
-// isLonedBook is a boolean value that is set to false by default which show the download receipt icon if it is true
 
 export const BookCard = ({
     id,
@@ -15,12 +14,12 @@ export const BookCard = ({
     coverUrl,                   
 }: Book) => {
     return (
-        <li className="xs:w-52 w-full">              
-            <Link href={`/books/${id}`} className='w-full flex flex-col items-center'>
+        <li className="w-full xs:w-52">              
+            <Link href={`/books/${id}`} className='flex w-full flex-col items-center'>
 
                 <BookCover coverColor={coverColor} coverImage={coverUrl}/>
 
-                <div className='mt-4 xs:max-w-40 max-w-28'>
+                <div className='mt-4 max-w-28 xs:max-w-40'>
                     <p className='book-title'>{title}</p>
                     <p className='book-genre'>{genre}</p>
                 </div>
@@ -52,7 +51,7 @@ export const BorrowedBook = (props: BorrowedBook) => {
           />
         )}
   
-        <Link href={`/books/${id}`} className="w-full flex flex-col items-center">
+        <Link href={`/books/${id}`} className="flex w-full flex-col items-center">
           <div
             className="borrowed-book_cover"
             style={{
@@ -71,7 +70,7 @@ export const BorrowedBook = (props: BorrowedBook) => {
             <p className="book-genre">{genre}</p>
   
             <div className="mt-5 space-y-1.5">
-              <div className="flex flex-row gap-1 items-center">
+              <div className="flex flex-row items-center gap-1">
                 <Image
                   src="/icons/book-2.svg"
                   alt="calendar"
@@ -83,8 +82,8 @@ export const BorrowedBook = (props: BorrowedBook) => {
                 </p>
               </div>
   
-              <div className="flex justify-between items-center gap-2">
-                <div className="flex-1 flex flex-row gap-1 items-center">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-1 flex-row items-center gap-1">
                   <Image
                     src={
                       isReturned

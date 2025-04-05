@@ -41,7 +41,7 @@ const Pagination = ({ variant, hasNextPage }: Props) => {
       <p
         className={cn(
           variant === "dark"
-            ? "bg-light-200 text-black"
+            ? "bg-light-200 text-dark-300"
             : "bg-primary-admin text-white"
         )}
       >
