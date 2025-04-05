@@ -10,6 +10,7 @@ export const STATUS_ENUM = pgEnum("status", [
   ]);
   export const ROLE_ENUM = pgEnum("role", ["USER", "ADMIN"]);
   export const BORROW_STATUS_ENUM = pgEnum("borrow_status", [
+    "OVERDUE",
     "BORROWED",
     "RETURNED",
   ]);

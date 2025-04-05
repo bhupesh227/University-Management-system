@@ -6,6 +6,7 @@ import BookCover from '@/components/BookCover';
 import Image from 'next/image';
 import { getBooks } from '@/lib/admin/actions/book';
 import Pagination from '@/components/Pagination';
+import dayjs from 'dayjs';
 
 const page = async({searchParams}: PageProps) => {
   
@@ -62,7 +63,7 @@ const page = async({searchParams}: PageProps) => {
                       {book.genre}
                     </TableCell>
                     <TableCell className="text-sm font-medium text-dark-200">
-                      Dec 19 2023
+                      {dayjs(book.createdAt).format("DD/MM/YYYY")}
                     </TableCell>
                     <TableCell>
                       <Button asChild className="view-btn !shadow">

@@ -89,3 +89,12 @@ interface UpdateAccountStatusParams {
     userId: string;
     status: "PENDING" | "APPROVED" | "REJECTED";
 }
+
+interface UpdateBookParams extends BookParams {
+    bookId: string;
+}
+
+interface Metdata {
+    totalPages?: number;
+    hasNextPage?: boolean;
+}

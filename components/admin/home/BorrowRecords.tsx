@@ -24,7 +24,7 @@ const BorrowRecords = async () => {
         </h3>
 
         <Button asChild className="view-btn">
-          <Link href="/admin/borrow-records">View All</Link>
+          <Link href="/admin/borrowRecords">View All</Link>
         </Button>
       </div>
 

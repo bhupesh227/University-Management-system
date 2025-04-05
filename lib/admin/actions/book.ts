@@ -165,3 +165,62 @@ export async function getBooks({
     };
   }
 }
+
+export async function editBook(params: UpdateBookParams) {
+  try {
+    const existingBook = await db
+      .select()
+      .from(books)
+      .where(eq(books.id, params.bookId))
+      .limit(1);
+
+    if (existingBook.length === 0) {
+      return {
+        success: false,
+        error: "Book not found",
+      };
+    }
+
+    // calculate availableCopies
+    const availableCopies =
+      params.totalCopies -
+      (params.totalCopies - existingBook[0].availableCopies);
+
+    const updatedBook = await db
+      .update(books)
+      .set({
+        ...params,
+        availableCopies,
+      })
+      .where(eq(books.id, params.bookId))
+      .returning();
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(updatedBook[0])),
+    };
+  } catch (error) {
+    console.error("Error editing book:", error);
+    return {
+      success: false,
+      error: "Error editing book",
+    };
+  }
+}
+
+export async function getBookadmin({ id }: { id: string }) {
+  try {
+    const book = await db.select().from(books).where(eq(books.id, id)).limit(1);
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(book[0])),
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      error: "Error getting book",
+    };
+  }
+}

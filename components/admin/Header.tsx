@@ -9,8 +9,8 @@ const Header = ({ session }: { session: Session }) => {
         <h2 className="text-2xl font-semibold text-dark-400">
           {session?.user?.name}
         </h2>
-        <p className="text-base text-slate-500">
-          Check your website and manage your products
+        <p className="text-base text-slate-700">
+          Lets do some magic with your library
         </p>
       </div>
 

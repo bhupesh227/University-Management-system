@@ -11,10 +11,10 @@ const page = () => {
       </Button>
 
       <section className="w-full max-w-2xl">
-        <BookForm />
+        <BookForm type='create'/>
       </section>
     </>
-  );
+  ); 
 }
 
 export default page

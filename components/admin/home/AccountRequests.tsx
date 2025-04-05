@@ -20,11 +20,11 @@ const AccountRequests = async () => {
     <section className="rounded-xl bg-white p-4">
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-xl font-semibold  text-dark-400">
-          Account Requests
+          Accounts
         </h3>
 
         <Button asChild className="view-btn">
-          <Link href="/admin/account-requests">View All</Link>
+          <Link href="/admin/accountRequests">View All</Link>
         </Button>
       </div>
 

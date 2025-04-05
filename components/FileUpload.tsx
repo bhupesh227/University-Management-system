@@ -2,11 +2,11 @@
 
 import config from "@/lib/config";
 import { IKImage, ImageKitProvider, IKUpload, IKVideo } from "imagekitio-next";
-import ImageKit from "imagekit";
 import { useRef ,useState} from "react";
 import Image from "next/image";
 import {toast} from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { IKUploadResponse, UploadError } from "imagekitio-next/dist/types/components/IKUpload/props";
 
 const {
   env: {
@@ -68,15 +68,16 @@ const FileUpload = ({
   };
 
 
-  const onError = (error :any)=>{
+  const onError = (error :UploadError)=>{
     console.log(error);
     toast({
       title: `${type} upload failed`,
       description: `Your ${type} could not be uploaded. Please try again.`,
       variant: "destructive",
     });
+    setProgress(0);
   };
-  const onSuccess = (res : any)=>{
+  const onSuccess = (res : IKUploadResponse)=>{
     setFile(res);
     onFileChange(res.filePath);
 
@@ -84,6 +85,7 @@ const FileUpload = ({
       title: `${type} uploaded successfully`,
       description :`${res.filePath} uploaded successfully`,
     });
+    setProgress(0);
   };
 
   const onValidate = (file: File) => {
@@ -118,6 +120,7 @@ const FileUpload = ({
       authenticator={authenticator}>
 
       <IKUpload className="hidden" ref={ikUploadRef}
+        fileName={type === "image" ? "image" : "video"}
         onError={onError}
         onSuccess={onSuccess}
         useUniqueFileName={true}
@@ -138,8 +141,7 @@ const FileUpload = ({
             e.preventDefault();
 
             if (ikUploadRef.current) {
-              // @ts-ignore
-              ikUploadRef.current?.click();
+              (ikUploadRef?.current as HTMLElement)?.click();
             }
           }}
         >
@@ -167,7 +169,7 @@ const FileUpload = ({
         </div>
       )}
 
-      {file &&
+      {file?.filePath &&
         (type === "image" ? (
           <IKImage
             alt={file.filePath}
@@ -177,7 +179,7 @@ const FileUpload = ({
           />
         ) : type === "video" ? (
           <IKVideo
-            path={file.filePath}
+            path={file.filePath!}
             controls={true}
             className="h-96 w-full rounded-xl"
           />
